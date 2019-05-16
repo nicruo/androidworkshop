@@ -13,21 +13,28 @@
         android:orientation="vertical">
         <View android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="6"
             android:background="@color/pokeRed"/>
         <View android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:background="@color/pokeBlack"/>
+        <View android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
             android:background="@color/pokeWhite"/>
-        <View android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/pokeRed"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/pokemonCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:padding="20dp" android:textColor="@color/pokeWhite" android:text="Loading..." />
 
     <LinearLayout
         android:layout_width="240dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/login_background"
+        android:padding="40dp"
         android:orientation="vertical" android:layout_centerVertical="true" android:layout_centerHorizontal="true">
         <TextView
             android:layout_width="match_parent"
@@ -36,6 +43,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:id="@+id/nameEditText" />
         <Button
             android:layout_width="match_parent"
@@ -44,6 +52,6 @@
             android:id="@+id/loginButton"/>
     </LinearLayout>
 
-
+<include layout="@layout/loading_view" />
 
 </RelativeLayout>
