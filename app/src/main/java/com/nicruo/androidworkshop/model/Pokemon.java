@@ -2,6 +2,8 @@ package com.nicruo.androidworkshop.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Pokemon {
 
     private Integer id;
@@ -11,10 +13,16 @@ public class Pokemon {
     @SerializedName("base_experience")
     private Integer baseExperience;
 
-    public Pokemon(Integer id, String name, Integer baseExperience) {
+    private List<PokemonMove> moves;
+
+    private PokemonSprites sprites;
+
+    public Pokemon(Integer id, String name, Integer baseExperiencem, List<PokemonMove> moves, PokemonSprites sprites) {
         this.id = id;
         this.name = name;
         this.baseExperience = baseExperience;
+        this.moves = moves;
+        this.sprites = sprites;
     }
 
     public Integer getId() {
@@ -39,5 +47,21 @@ public class Pokemon {
 
     public void setBaseExperience(Integer baseExperience) {
         this.baseExperience = baseExperience;
+    }
+
+    public List<PokemonMove> getMoves() {
+        return moves;
+    }
+
+    public void setMoves(List<PokemonMove> moves) {
+        this.moves = moves;
+    }
+
+    public PokemonSprites getSprites() {
+        return sprites;
+    }
+
+    public void setSprites(PokemonSprites sprites) {
+        this.sprites = sprites;
     }
 }
