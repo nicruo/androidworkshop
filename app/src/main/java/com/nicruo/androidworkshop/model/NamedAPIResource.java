@@ -26,4 +26,9 @@ public class NamedAPIResource {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getUrl();
+    }
 }

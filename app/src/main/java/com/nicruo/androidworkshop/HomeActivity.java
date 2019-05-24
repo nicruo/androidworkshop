@@ -1,10 +1,14 @@
 package com.nicruo.androidworkshop;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -12,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.nicruo.androidworkshop.model.NamedAPIResource;
 import com.nicruo.androidworkshop.model.Pokemon;
 import com.nicruo.androidworkshop.model.PokemonMove;
 import com.nicruo.androidworkshop.model.Post;
@@ -19,6 +24,7 @@ import com.nicruo.androidworkshop.services.PokeAPIService;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,14 +84,14 @@ public class HomeActivity extends AppCompatActivity {
                 pokemonBaseExperienceTextView.setText(response.body().getBaseExperience().toString());
 
 
-                ArrayList<String> moveStrings = new ArrayList<>();
+                ArrayList<NamedAPIResource> moveList = new ArrayList<>();
 
                 for( PokemonMove move : response.body().getMoves()) {
-                    moveStrings.add(move.getMove().getName());
+                    moveList.add(move.getMove());
                 }
 
 
-                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, moveStrings);
+                NamedAPIResourceAdapter listAdapter = new NamedAPIResourceAdapter(activity, R.layout.poke_list_item, moveList);
 
                 listView.setAdapter(listAdapter);
 
@@ -123,4 +129,34 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
+
+    class NamedAPIResourceAdapter extends ArrayAdapter<NamedAPIResource> {
+
+        Activity activity;
+        List<NamedAPIResource> objects;
+
+        public NamedAPIResourceAdapter(@NonNull Context context, int resource, @NonNull List<NamedAPIResource> objects) {
+            super(context, resource, objects);
+            activity = (Activity)context;
+            this.objects = objects;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+            View view = activity.getLayoutInflater().inflate( R.layout.poke_list_item, parent, false);
+
+            TextView textView1 = view.findViewById(R.id.textView1);
+            TextView textView2 = view.findViewById(R.id.textView2);
+
+            textView1.setText(objects.get(position).getName());
+
+            textView2.setText(objects.get(position).getUrl());
+
+
+            return view;
+        }
+    }
+
 }
