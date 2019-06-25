@@ -1,37 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    >
 
-    <LinearLayout
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.nicruo.androidworkshop.viewmodel.HomeViewModel" />
+    </data>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" android:orientation="vertical">
+        android:layout_height="match_parent"
+        tools:context=".HomeActivity">
 
-        <ImageView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:id="@+id/imageView"/>
+            android:layout_height="match_parent" android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/pokemonNameTextView" android:padding="10dp" android:text="Odish" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/pokemonBaseExperienceTextView" android:padding="10dp" android:text="99" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{viewModel.imageUrl}"
+                android:id="@+id/imageView"/>
 
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@{viewModel.pokemonName}" android:padding="10dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:padding="10dp" android:text="@{viewModel.pokemonBaseExperience.toString()}" />
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:listAdapter="@{viewModel.moves}"
+                android:layout_weight="1" />
 
-    </LinearLayout>
+        </LinearLayout>
 
 
 
-    <include android:visibility="gone" layout="@layout/loading_view" />
-</RelativeLayout>
+        <LinearLayout
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/pokeWhite"
+            android:visibility="@{viewModel.isLoading? View.VISIBLE : View.GONE}"
+            android:gravity="center">
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
